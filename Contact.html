@@ -15,17 +15,34 @@
     <body>
     <h2>Pour revenir à la page précedente cliquez <a href="index.html">ici</a></h2>   
     <ul>
-        <li><strong>Mon adresse mail personelle</strong> : yohann.marant@gmail.com
+        <li><strong>Mon adresse mail personelle</strong> : <a href="mailto:yohann.marant@gmail.com">yohann.marant@gmail.com</a>
     </ul>
     <br>
-    <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom" placeholder="Entrez votre nom ici">
+    <form action="mailto:yohann.marant@gmail.com" method="post">
+        <label for="nom"> Nom : </label><input type="text" id="nom" name="nom" placeholder="Entrez votre nom ici" autofocus>
     <br><br>
-    <label for="Prénom">Prénom :</label>
-        <input type="text" id="Prénom" name="Prénom" placeholder="Entrez votre prénom ici">
+        <label for="Prenom"> Prenom : </label><input type="text" id="Prenom" name="Prenom" placeholder="Entrez votre prénom ici">
     <br><br> 
-    <label for="email">Email :</label>
-        <input type="email" id="email" name="email" placeholder="Entrez votre adresse email">
-        
+    <label>Civilite :</label>
+        M.<input type="radio" id="M." name="Civilite">
+        Mme<input type="radio" id="Mme" name="Civilite">    
+    <br><br>
+        Date De Naissance : <input type="date" id="date" name="date">
+    <br><br>
+    Pays : <select>
+        <option value="France">France</option>
+        <option value="Belgique">Belgique</option>
+        <option value="Royaume-Uni">Royaume-Uni</option>
+        <option value="Espagne">Espagne</option>
+    </select><br><br>
+        <label for="email"> Email : </label><input type="email" id="email" name="email" placeholder="Entrez votre adresse email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required>
+    <br><br>
+    <label for="mdp"> Mot de passe : </label> <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe">
+    <br><br>
+        <label for="tel"> Telephone : </label><input type="tel" id="tel" name="tel" placeholder="Numero de telephone">
+    <br><br>
+    Newsletter : <input type="checkbox"><br>
+    Message : <textarea></textarea><br>
+    <input type="submit" value="Envoyer le message">
     </body>
 </html>
