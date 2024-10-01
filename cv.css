@@ -10,5 +10,41 @@ h2{
 h1{
     color: red
 }
+
 #naissance{color: orange}
 .violet{color: violet}
+
+#content {
+    width: 400px;
+    border: 2px solid white;
+    margin: 1em 0 0 3em;
+    padding: 1em;
+    border-radius: 3em;
+    box-shadow: 5px 5px 5px black;
+    background-color: rgba(0, 187, 255, 0,7);
+}
+
+a#retour {
+    padding: 1em;
+    margin: 1em;
+    color: blue;
+    text-decoration: none;
+}
+a#retour:hover {
+    color: orange;
+    text-decoration: none;
+}
+#mention{
+    position: absolute;
+    top: 1em;
+    right: 1em;
+}
+#carte h1, #mention{
+    color: orange;
+}
+@media screen and (max-width: 800px) {
+    #adresse {
+        display: none;
+    }
+    
+}
