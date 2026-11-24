@@ -1,0 +1,122 @@
+/* =========================================================
+   YohannOS — gestionnaire de fenêtres
+   ========================================================= */
+
+#windows { position: absolute; inset: 0 0 var(--taskbar-h) 0; pointer-events: none; }
+
+.win {
+  position: absolute; pointer-events: auto;
+  display: flex; flex-direction: column;
+  min-width: 200px; min-height: 120px;
+  background: var(--bg-win);
+  backdrop-filter: blur(var(--blur)) saturate(1.5);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(1.5);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-win);
+  outline: none;
+  transition: opacity .2s var(--ease), transform .25s var(--ease), box-shadow .2s, border-radius .2s;
+  transform-origin: center center;
+  animation: winOpen .26s var(--ease);
+}
+@keyframes winOpen { from { opacity: 0; transform: scale(.92) translateY(10px); } to { opacity: 1; transform: none; } }
+.win:not(.focused) { box-shadow: 0 12px 40px rgba(0,0,0,.35); }
+.win:not(.focused) .win-titlebar { opacity: .72; }
+.win.closing { opacity: 0 !important; transform: scale(.94) !important; pointer-events: none; }
+.win.minimized { opacity: 0; transform: translateY(40vh) scale(.3); pointer-events: none; visibility: hidden; transition: opacity .25s var(--ease), transform .3s var(--ease), visibility 0s .3s; }
+.win.maximized { left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important; border-radius: 0; border-left: none; border-right: none; border-top: none; }
+.win.minimized { transform: scale(.12); }
+.win.animating { transition: left .25s var(--ease), top .25s var(--ease), width .25s var(--ease), height .25s var(--ease), opacity .2s, transform .25s var(--ease), border-radius .2s; }
+.win.moving { transition: none; }
+.win.flash { animation: winFlash .5s; }
+@keyframes winFlash { 25%, 75% { box-shadow: 0 0 0 3px rgba(var(--accent-rgb), .8), var(--shadow-win); } }
+
+.win-titlebar {
+  height: 40px; flex: none;
+  display: flex; align-items: center; gap: 9px;
+  padding-left: 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-titlebar);
+  border-radius: var(--radius) var(--radius) 0 0;
+  cursor: default;
+  touch-action: none;
+}
+.win.maximized .win-titlebar { border-radius: 0; }
+.win-titlebar .win-icon { display: flex; }
+.win-title { flex: 1; min-width: 0; font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.win-controls { display: flex; height: 100%; }
+.win-controls button {
+  width: 46px; height: 100%; border: none; background: transparent; color: var(--fg-dim);
+  display: flex; align-items: center; justify-content: center; transition: background .12s, color .12s;
+}
+.win-controls button:hover { background: var(--bg-hover); color: var(--fg); }
+.win-controls button.close { border-top-right-radius: var(--radius); }
+.win.maximized .win-controls button.close { border-radius: 0; }
+.win-controls button.close:hover { background: #e81123; color: #fff; }
+
+.win-body { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; position: relative; border-radius: 0 0 var(--radius) var(--radius); }
+.win.maximized .win-body { border-radius: 0; }
+.win-body.pad { padding: 16px; overflow: auto; }
+
+/* Poignées de redimensionnement */
+.win-rz { position: absolute; z-index: 3; touch-action: none; }
+.win-rz.n { top: -4px; left: 8px; right: 8px; height: 8px; cursor: n-resize; }
+.win-rz.s { bottom: -4px; left: 8px; right: 8px; height: 8px; cursor: s-resize; }
+.win-rz.e { right: -4px; top: 8px; bottom: 8px; width: 8px; cursor: e-resize; }
+.win-rz.w { left: -4px; top: 8px; bottom: 8px; width: 8px; cursor: w-resize; }
+.win-rz.ne { top: -5px; right: -5px; width: 14px; height: 14px; cursor: ne-resize; }
+.win-rz.nw { top: -5px; left: -5px; width: 14px; height: 14px; cursor: nw-resize; }
+.win-rz.se { bottom: -5px; right: -5px; width: 14px; height: 14px; cursor: se-resize; }
+.win-rz.sw { bottom: -5px; left: -5px; width: 14px; height: 14px; cursor: sw-resize; }
+.win.maximized .win-rz, .win.no-resize .win-rz { display: none; }
+
+/* Aperçu d'ancrage */
+#snap-preview {
+  position: absolute; z-index: 50; pointer-events: none; opacity: 0;
+  border-radius: 14px; border: 2px solid rgba(var(--accent-rgb), .8);
+  background: rgba(var(--accent-rgb), .18);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  transition: all .18s var(--ease);
+}
+#snap-preview.show { opacity: 1; }
+
+/* Modal (dialogue attaché à une fenêtre) */
+.win-shade { position: absolute; inset: 0; z-index: 10; background: rgba(0,0,0,.25); border-radius: inherit; animation: fadeIn .15s; }
+
+/* Dialogues */
+.dlg { display: flex; flex-direction: column; height: 100%; }
+.dlg-main { flex: 1; display: flex; gap: 16px; padding: 22px 22px 14px; overflow: auto; }
+.dlg-main .dlg-ico { flex: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(var(--accent-rgb), .18); color: var(--accent); }
+.dlg-main .dlg-ico.warn { background: rgba(255, 181, 71, .18); color: var(--warning); }
+.dlg-main .dlg-ico.err { background: rgba(255, 92, 108, .18); color: var(--danger); }
+.dlg-text { flex: 1; min-width: 0; white-space: pre-wrap; word-wrap: break-word; padding-top: 8px; }
+.dlg-text .input { width: 100%; margin-top: 12px; }
+.dlg-buttons { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--border); background: var(--bg-titlebar); }
+.dlg-buttons .btn { min-width: 86px; }
+
+/* Sélecteur de fichiers */
+.fpick { display: flex; flex-direction: column; height: 100%; }
+.fpick-bar { display: flex; gap: 6px; padding: 8px; border-bottom: 1px solid var(--border); align-items: center; }
+.fpick-bar .input { flex: 1; font-family: var(--mono); font-size: 12.5px; }
+.fpick-main { flex: 1; display: flex; min-height: 0; }
+.fpick-side { width: 150px; border-right: 1px solid var(--border); padding: 6px; overflow-y: auto; flex: none; }
+.fpick-side button { display: flex; align-items: center; gap: 8px; width: 100%; padding: 6px 8px; border: none; background: transparent; border-radius: 7px; font-size: 12.5px; text-align: left; }
+.fpick-side button:hover { background: var(--bg-hover); }
+.fpick-list { flex: 1; overflow-y: auto; padding: 6px; }
+.fpick-item { display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 7px; font-size: 13px; cursor: default; }
+.fpick-item:hover { background: var(--bg-hover); }
+.fpick-item.sel { background: rgba(var(--accent-rgb), .28); }
+.fpick-item .meta { margin-left: auto; font-size: 11.5px; color: var(--fg-faint); }
+.fpick-foot { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--border); align-items: center; }
+.fpick-foot .input { flex: 1; }
+
+/* Propriétés */
+.props { padding: 18px 20px; display: grid; grid-template-columns: 110px 1fr; gap: 8px 12px; font-size: 13px; align-content: start; }
+.props .k { color: var(--fg-dim); }
+.props .v { word-break: break-all; }
+.props .head { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; padding-bottom: 12px; margin-bottom: 4px; border-bottom: 1px solid var(--border); font-size: 15px; font-weight: 600; }
+
+@media (max-width: 720px) {
+  .win-rz { display: none; }
+  .win-controls button { width: 42px; }
+}

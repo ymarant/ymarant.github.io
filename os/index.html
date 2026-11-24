@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1020">
+  <title>YohannOS</title>
+  <meta name="description" content="YohannOS — un système d'exploitation complet qui tourne dans le navigateur. Portfolio interactif de Yohann Marant, étudiant à l'EPSI Lille.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6cff'/%3E%3Cstop offset='1' stop-color='%2306b6d4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M18 16l14 18 14-18M32 34v16' stroke='white' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/system.css">
+  <link rel="stylesheet" href="css/windows.css">
+  <link rel="stylesheet" href="css/apps.css">
+</head>
+<body>
+  <noscript>
+    <div style="padding:2em;font-family:sans-serif;color:#fff;background:#111;height:100vh">
+      YohannOS a besoin de JavaScript pour démarrer. <a href="../index.html" style="color:#8af">Voir le CV classique</a>.
+    </div>
+  </noscript>
+
+  <!-- Écran de démarrage -->
+  <div id="boot" class="screen"></div>
+  <!-- Écran de verrouillage / connexion -->
+  <div id="lock" class="screen hidden"></div>
+  <!-- Économiseur d'écran -->
+  <canvas id="screensaver" class="hidden"></canvas>
+
+  <!-- Bureau -->
+  <main id="desktop" aria-label="Bureau">
+    <div id="wallpaper"></div>
+    <canvas id="wallpaper-canvas"></canvas>
+    <div id="desktop-icons"></div>
+    <div id="selection-rect"></div>
+    <div id="windows"></div>
+    <div id="snap-preview"></div>
+    <div id="toasts"></div>
+  </main>
+
+  <nav id="taskbar" aria-label="Barre des tâches"></nav>
+  <div id="start-menu" class="panel hidden" role="menu"></div>
+  <div id="control-center" class="panel hidden"></div>
+  <div id="calendar-panel" class="panel hidden"></div>
+  <div id="palette" class="hidden"></div>
+  <div id="menus"></div>
+  <div id="tooltip"></div>
+
+  <!-- Noyau -->
+  <script src="js/core/utils.js"></script>
+  <script src="js/core/icons.js"></script>
+  <script src="js/core/fs.js"></script>
+  <script src="js/core/settings.js"></script>
+  <script src="js/core/sound.js"></script>
+  <script src="js/core/menu.js"></script>
+  <script src="js/core/wm.js"></script>
+  <script src="js/core/dialog.js"></script>
+  <script src="js/core/notify.js"></script>
+  <script src="js/core/apps.js"></script>
+  <script src="js/core/markdown.js"></script>
+  <script src="js/core/desktop.js"></script>
+  <script src="js/core/taskbar.js"></script>
+  <script src="js/core/palette.js"></script>
+  <script src="js/core/boot.js"></script>
+
+  <!-- Applications -->
+  <script src="js/apps/welcome.js"></script>
+  <script src="js/apps/about.js"></script>
+  <script src="js/apps/explorer.js"></script>
+  <script src="js/apps/terminal.js"></script>
+  <script src="js/apps/notepad.js"></script>
+  <script src="js/apps/codestudio.js"></script>
+  <script src="js/apps/browser.js"></script>
+  <script src="js/apps/paint.js"></script>
+  <script src="js/apps/imageviewer.js"></script>
+  <script src="js/apps/calculator.js"></script>
+  <script src="js/apps/clock.js"></script>
+  <script src="js/apps/weather.js"></script>
+  <script src="js/apps/synth.js"></script>
+  <script src="js/apps/contact.js"></script>
+  <script src="js/apps/taskmgr.js"></script>
+  <script src="js/apps/settings-app.js"></script>
+  <script src="js/apps/minesweeper.js"></script>
+  <script src="js/apps/snake.js"></script>
+  <script src="js/apps/breakout.js"></script>
+  <script src="js/apps/tictactoe.js"></script>
+
+  <!-- Démarrage -->
+  <script src="js/core/main.js"></script>
+</body>
+</html>
