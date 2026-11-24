@@ -175,7 +175,7 @@
       const typeName = e.isDir ? 'Dossier' : (TYPE_NAMES[ext] || (ext ? `Fichier ${ext.toUpperCase()}` : 'Fichier'));
       let n;
       if (view === 'grid') {
-        n = el('div.ex-item', { title: e.name }, el('div.ex-ico', { html: iconFor(e, 52) }), el('div.ex-name', e.name));
+        n = el('div.ex-item', { title: e.name }, el('div.ex-ico', { html: iconFor(e, 52) }), el('div.ex-name', { html: e.isDir ? U.escape(e.name) : U.fileLabel(e.name) }));
       } else {
         n = el('div.ex-row',
           el('span.c-name', { html: iconFor(e, 20) }, el('span', e.name)),

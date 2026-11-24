@@ -94,6 +94,8 @@ window.YOS = window.YOS || {};
     if (d < 86400) return `il y a ${Math.round(d / 3600)} h`;
     return U.formatDate(ts, { dateStyle: 'medium' });
   };
+  /** Nom de fichier avec point de coupure avant l'extension */
+  U.fileLabel = name => { const i = name.lastIndexOf('.'); const e = U.escape; return i > 0 ? e(name.slice(0, i)) + '<wbr>' + e(name.slice(i)) : e(name); };
   U.capitalize = s => s.charAt(0).toUpperCase() + s.slice(1);
 
   /** Stockage local (préfixé, tolérant aux erreurs) */

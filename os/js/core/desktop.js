@@ -80,7 +80,7 @@
       const { x, y } = cellXY(c, r);
       const node = el('div.d-icon', { tabindex: '-1', dataset: { key: it.key }, style: { left: x + 'px', top: y + 'px' }, title: it.kind === 'file' ? Y.fs.pretty(it.path) : (it.app.description || it.name) },
         el('div.d-img', { html: iconHtml(it) }),
-        el('div.d-label', it.name));
+        el('div.d-label', { html: it.kind === 'file' && !it.isDir ? U.fileLabel(it.name) : U.escape(it.name) }));
       if (it.kind === 'file' && it.isDir) node.dataset.dropPath = it.path;
       if (it.kind === 'app' && it.app.id === 'trash') node.dataset.dropTrash = '1';
       if (selected.has(it.key)) node.classList.add('selected');

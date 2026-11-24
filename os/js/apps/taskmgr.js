@@ -144,7 +144,7 @@
         table.appendChild(el('div.tm-group', 'Processus système'));
         sys.forEach(([n, id, c, m]) => table.appendChild(el('div.tm-row.sys', el('span.n', { html: Y.icons.svg('cpu', 16) }, el('span', n)), el('span.mono', String(sys.findIndex(s => s[1] === id) + 1)), el('span', 'Service'), el('span.mono', (c + Math.random() * 0.3).toFixed(1) + ' %'), el('span.mono', m.toFixed(1) + ' Mo'))));
         endBtn.disabled = !selected || !Y.wm.get(selected) || Y.wm.get(selected) === win;
-        sum.textContent = `${wins.length} fenêtre(s) · charge ${Math.round(totalCpu)} % · ${M.fps.toFixed(0)} i/s`;
+        sum.textContent = M.cpu.length ? `${wins.length} fenêtre(s) · charge ${Math.round(totalCpu)} % · ${M.fps.toFixed(0)} i/s` : `${wins.length} fenêtre(s) · mesure en cours…`;
       }
       render();
       redraw = render;
